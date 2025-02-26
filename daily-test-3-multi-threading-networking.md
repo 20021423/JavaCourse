@@ -1,505 +1,364 @@
-# DAILY TEST 3: MULTI-THREADED PROGRAMMING, DATA FILES, AND NETWORK PROGRAMMING
+# DAILY TEST 3: MULTI-THREADED PROGRAMMING, DATA FILES, AND NETWORK PROGRAMMING (JAVA ONLY)
 
-## Câu hỏi trắc nghiệm
+## Multiple Choice Questions
 
-### 1. Trong Java, để tạo một luồng (thread) mới, bạn có thể:
-A. Kế thừa từ lớp Thread
-B. Triển khai giao diện Runnable
-C. Sử dụng java.util.concurrent.Executor
-D. Tất cả các phương án trên
+### 1. In Java, which of the following is NOT a valid way to create a new thread?
+-) A. Extending the `Thread` class
+-) B. Implementing the `Runnable` interface
+-) C. Using the `ForkJoinPool` class directly
+-) D. Using an `ExecutorService`
 
-**Đáp án: D**
+**Correct Answer: C**
 
-*Giải thích:* Trong Java, có nhiều cách để tạo thread mới, bao gồm kế thừa từ lớp Thread, triển khai giao diện Runnable, và sử dụng các lớp trong gói java.util.concurrent như Executor để quản lý thread. Cả ba phương pháp đều có thể được sử dụng tùy thuộc vào nhu cầu cụ thể.
+*Explanation:* While `ForkJoinPool` is used for parallel task execution, it's not a direct way to create a simple thread. Threads are typically created by extending `Thread` or implementing `Runnable` and then managed using `ExecutorService` or started directly. `ForkJoinPool` is a specialized `ExecutorService` for recursive fork/join tasks.
 
-*Mảng kiến thức: Lập trình đa luồng (Multi-threaded Programming)*
+*Knowledge Area: Multi-threaded Programming (Java)*
 
-### 2. Vấn đề "deadlock" xảy ra khi:
-A. Hai hoặc nhiều threads đang chờ đợi lẫn nhau để giải phóng tài nguyên
-B. Một thread sử dụng quá nhiều CPU
-C. Một thread bị chấm dứt bởi lỗi
-D. Không đủ bộ nhớ để phân bổ cho thread mới
+### 2. What is the primary purpose of the `synchronized` keyword in Java multithreading?
+-) A. To increase the speed of thread execution
+-) B. To ensure that only one thread can access a critical section of code at a time
+-) C. To allow threads to run in parallel on different CPUs
+-) D. To automatically manage thread lifecycle
 
-**Đáp án: A**
+**Correct Answer: B**
 
-*Giải thích:* Deadlock xảy ra khi hai hoặc nhiều threads bị chặn vĩnh viễn, mỗi thread đang chờ đợi một tài nguyên đang được giữ bởi thread khác. Ví dụ: Thread A nắm giữ tài nguyên X và đang chờ tài nguyên Y, trong khi Thread B nắm giữ tài nguyên Y và đang chờ tài nguyên X.
+*Explanation:* The `synchronized` keyword in Java is used to achieve thread safety by controlling access to shared resources. It ensures mutual exclusion, meaning only one thread can execute a synchronized block or method on a given object at any time, preventing race conditions.
 
-*Mảng kiến thức: Lập trình đa luồng (Multi-threaded Programming)*
+*Knowledge Area: Multi-threaded Programming (Java)*
 
-### 3. Các biến trong Java được đánh dấu là "volatile" khi:
-A. Chúng không thể thay đổi giá trị
-B. Chúng được truy cập bởi nhiều threads và không lưu trữ trong bộ nhớ cache của thread
-C. Chúng được lưu trữ trong bộ nhớ heap
-D. Chúng chỉ có thể được truy cập bởi thread tạo ra nó
+### 3. Which interface must be implemented to define a task that can be executed by a thread in Java?
+-) A. `Thread`
+-) B. `Task`
+-) C. `Runnable`
+-) D. `Executable`
 
-**Đáp án: B**
+**Correct Answer: C**
 
-*Giải thích:* Từ khóa volatile trong Java đảm bảo rằng các thay đổi đối với biến được hiển thị ngay lập tức cho tất cả các threads. Khi một biến được đánh dấu là volatile, nó không được lưu trữ trong bộ nhớ cache của thread, và tất cả các thao tác đọc và ghi đều được thực hiện trực tiếp từ bộ nhớ chính.
+*Explanation:* The `Runnable` interface in Java is designed for tasks that are intended to be executed by a thread. Classes implementing `Runnable` must define a `run()` method containing the code to be executed by the thread.
 
-*Mảng kiến thức: Lập trình đa luồng (Multi-threaded Programming)*
+*Knowledge Area: Multi-threaded Programming (Java)*
 
-### 4. Trong Python, cách nào sau đây được sử dụng để tạo thread:
-A. Sử dụng module threading và tạo đối tượng Thread
-B. Kế thừa từ lớp Process
-C. Sử dụng hàm async
-D. Tạo đối tượng từ lớp MultithreadedTask
+### 4. What is a "race condition" in Java multithreading?
+-) A. A state where threads compete for CPU time
+-) B. A situation where multiple threads try to access and modify shared data concurrently, leading to unpredictable outcomes
+-) C. When a thread finishes its execution faster than expected
+-) D. When threads are waiting for I/O operations to complete
 
-**Đáp án: A**
+**Correct Answer: B**
 
-*Giải thích:* Trong Python, thread được tạo bằng cách sử dụng module threading và tạo một đối tượng Thread. Có hai cách chính: truyền một hàm vào thread hoặc mở rộng lớp Thread và ghi đè phương thức run().
+*Explanation:* A race condition occurs when multiple threads access shared data concurrently, and the final result of the operation depends on the specific order in which the threads execute. This can lead to unexpected and incorrect results if synchronization mechanisms are not properly used.
 
-```python
-import threading
+*Knowledge Area: Multi-threaded Programming (Java)*
 
-def function():
-    print("Thread running")
+### 5. Which class in `java.util.concurrent` is used to create and manage a pool of threads?
+-) A. `ThreadPool`
+-) B. `ThreadManager`
+-) C. `ExecutorService`
+-) D. `ConcurrentPool`
 
-# Cách 1
-thread = threading.Thread(target=function)
-thread.start()
+**Correct Answer: C**
 
-# Cách 2
-class MyThread(threading.Thread):
-    def run(self):
-        print("Thread running")
+*Explanation:*  `ExecutorService` is the interface in `java.util.concurrent` that represents an asynchronous execution service capable of executing `Runnable` tasks.  Implementations like `ThreadPoolExecutor` (obtained via `Executors` factory methods) provide thread pools to manage and reuse threads efficiently.
 
-thread = MyThread()
-thread.start()
-```
+*Knowledge Area: Multi-threaded Programming (Java)*
 
-*Mảng kiến thức: Lập trình đa luồng (Multi-threaded Programming)*
+### 6. What is "context switching" in the context of multithreading?
+-) A. Changing the priority of a thread during execution
+-) B. Switching the execution of a thread from one CPU core to another
+-) C. The process of saving the state of a running thread and loading the state of another thread to allow CPU sharing
+-) D. When a thread voluntarily yields control to another thread
 
-### 5. Khái niệm "Thread Pool" đề cập đến:
-A. Một nhóm thread được tạo trước và sẵn sàng thực hiện các nhiệm vụ
-B. Một thread đang ở trạng thái nghỉ
-C. Một thread chạy với độ ưu tiên thấp
-D. Một thread đang sử dụng quá nhiều tài nguyên
+**Correct Answer: C**
 
-**Đáp án: A**
+*Explanation:* Context switching is the mechanism that allows an operating system (and JVM) to quickly switch between threads, giving the illusion of concurrency. It involves saving the state of the current thread so it can be restored later and loading the saved state of another thread to run it.
 
-*Giải thích:* Thread Pool là một mẫu thiết kế trong đó một số lượng threads được tạo trước và được lưu trong một pool, sẵn sàng thực hiện các nhiệm vụ. Thay vì tạo thread mới cho mỗi nhiệm vụ, thread từ pool được sử dụng, thực hiện nhiệm vụ và sau đó quay trở lại pool. Điều này giảm chi phí tạo và hủy thread và cải thiện hiệu suất trong các ứng dụng cần xử lý nhiều nhiệm vụ ngắn.
+*Knowledge Area: Multi-threaded Programming (Java)*
 
-*Mảng kiến thức: Lập trình đa luồng (Multi-threaded Programming)*
+### 7. Which Java class is most suitable for efficiently reading large text files line by line?
+-) A. `FileReader`
+-) B. `FileWriter`
+-) C. `BufferedReader`
+-) D. `FileInputStream`
 
-### 6. Trong Java, lớp nào trong gói java.util.concurrent cung cấp hỗ trợ để tạo thread pool:
-A. ThreadPool
-B. ExecutorService
-C. ThreadManager
-D. ConcurrentPool
+**Correct Answer: C**
 
-**Đáp án: B**
+*Explanation:* `BufferedReader` is designed for efficient reading of character streams, especially text files. It buffers input, reducing the number of disk read operations, making it much faster than reading directly with `FileReader` for line-by-line processing of large text files.
 
-*Giải thích:* Trong Java, ExecutorService là một interface trong gói java.util.concurrent cung cấp các phương thức để quản lý việc chấm dứt và các phương thức có thể tạo Future để theo dõi tiến trình của một hoặc nhiều nhiệm vụ không đồng bộ. Executors là lớp tiện ích cung cấp các phương thức factory để tạo các loại ExecutorService khác nhau, bao gồm các thread pool.
+*Knowledge Area: File Handling (Java)*
 
-```java
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+### 8. What is the correct mode to open a file for writing in Java, overwriting existing content if the file exists?
+-) A. "r" (read)
+-) B. "a" (append)
+-) C. "w" (write)
+-) D. "rw" (read and write)
 
-ExecutorService executor = Executors.newFixedThreadPool(5);
-executor.submit(() -> {
-    System.out.println("Task executing");
-});
-```
+**Correct Answer: C**
 
-*Mảng kiến thức: Lập trình đa luồng (Multi-threaded Programming)*
+*Explanation:* In Java's file handling, the "w" mode (used with `FileWriter` or `FileOutputStream`) is for writing. It creates the file if it doesn't exist and overwrites the file if it does. "r" is for reading, "a" is for appending, and "rw" is for reading and writing without truncation.
 
-### 7. "Race condition" trong lập trình đa luồng là gì?
-A. Khi hai hoặc nhiều threads cạnh tranh để hoàn thành nhiệm vụ của họ trước
-B. Khi một thread chạy nhanh hơn các thread khác
-C. Khi kết quả của một tính toán phụ thuộc vào thứ tự trong đó các threads được thực thi
-D. Khi các threads chạy song song trên các CPU khác nhau
+*Knowledge Area: File Handling (Java)*
 
-**Đáp án: C**
+### 9. Which Java class is used for reading binary data from a file?
+-) A. `FileReader`
+-) B. `BufferedReader`
+-) C. `FileInputStream`
+-) D. `FileWriter`
 
-*Giải thích:* Race condition là một vấn đề trong lập trình đa luồng khi kết quả của một tính toán phụ thuộc vào thứ tự không thể dự đoán được trong đó các threads được thực thi. Nó xảy ra khi nhiều threads truy cập và sửa đổi dữ liệu được chia sẻ đồng thời, và kết quả cuối cùng phụ thuộc vào thời gian cụ thể của việc truy cập.
+**Correct Answer: C**
 
-*Mảng kiến thức: Lập trình đa luồng (Multi-threaded Programming)*
+*Explanation:* `FileInputStream` is specifically designed for reading raw byte streams from files, making it the correct choice for binary data. `FileReader` and `BufferedReader` are for character streams (text), and `FileWriter` is for writing characters.
 
-### 8. Trong Java, từ khóa "synchronized" được sử dụng để:
-A. Tăng tốc độ thực thi của một phương thức
-B. Ngăn nhiều threads thực thi một phương thức hoặc khối mã cùng một lúc
-C. Cho phép một phương thức chạy trên nhiều CPU
-D. Đảm bảo một phương thức luôn được thực thi bởi thread chính
+*Knowledge Area: File Handling (Java)*
 
-**Đáp án: B**
+### 10. Which class in `java.nio.file` provides static methods for common file operations like reading all lines, copying, and deleting files?
+-) A. `File`
+-) B. `Path`
+-) C. `Files`
+-) D. `FileSystem`
 
-*Giải thích:* Trong Java, từ khóa synchronized được sử dụng để tạo một critical section, ngăn nhiều threads thực thi một phương thức hoặc khối mã cùng một lúc. Khi một thread thực thi một phương thức synchronized, nó có được lock (khóa) của đối tượng và không thread nào khác có thể thực thi bất kỳ phương thức synchronized nào của đối tượng đó cho đến khi lock được giải phóng.
+**Correct Answer: C**
 
-*Mảng kiến thức: Lập trình đa luồng (Multi-threaded Programming)*
+*Explanation:* The `Files` class in `java.nio.file` is a utility class that provides a rich set of static methods for performing various operations on files and directories, including reading all lines, copying, moving, deleting, and creating files and directories.
 
-### 9. Trong Python, cơ chế nào sau đây không thể sử dụng để đồng bộ hóa các threads:
-A. Lock
-B. Semaphore
-C. Event
-D. GIL Bypasser
+*Knowledge Area: File Handling (Java)*
 
-**Đáp án: D**
+### 11. What is the purpose of `RandomAccessFile` in Java?
+-) A. To create temporary files
+-) B. To read and write files sequentially
+-) C. To read and write files at arbitrary positions
+-) D. To compress and decompress files
 
-*Giải thích:* "GIL Bypasser" là phương án không tồn tại. Python cung cấp nhiều cơ chế đồng bộ hóa trong module threading, bao gồm Lock, RLock, Semaphore, BoundedSemaphore, Event và Condition. Global Interpreter Lock (GIL) là một cơ chế trong CPython ngăn nhiều threads thực thi mã Python đồng thời, nhưng không có cơ chế chính thức gọi là "GIL Bypasser" để bỏ qua GIL.
+**Correct Answer: C**
 
-*Mảng kiến thức: Lập trình đa luồng (Multi-threaded Programming)*
+*Explanation:* `RandomAccessFile` allows for both reading and writing to a file, and importantly, it allows seeking to any position within the file. This is useful for scenarios requiring non-sequential file access, like database systems or file indexing.
 
-### 10. Trong lập trình đa luồng, "context switching" là:
-A. Khi một thread đang chạy bị tạm dừng và thread khác được thực thi
-B. Khi một thread thay đổi thuật toán của nó
-C. Khi một thread thay đổi độ ưu tiên của nó
-D. Khi một thread đang chạy đọc dữ liệu từ thread khác
+*Knowledge Area: File Handling (Java)*
 
-**Đáp án: A**
+### 12. Which method of `java.nio.file.Files` is used to read all lines of text from a file into a `List<String>`?
+-) A. `readLines()`
+-) B. `getAllLines()`
+-) C. `readAllLines()`
+-) D. `linesToList()`
 
-*Giải thích:* Context switching là quá trình lưu trạng thái của một thread hoặc quá trình đang chạy để có thể tiếp tục thực thi nó sau, và sau đó nạp trạng thái của thread khác và thực thi nó. Đây là một phần quan trọng của multitasking và là một trong những chi phí liên quan đến việc chạy nhiều threads hoặc processes.
+**Correct Answer: C**
 
-*Mảng kiến thức: Lập trình đa luồng (Multi-threaded Programming)*
+*Explanation:* The correct method in `java.nio.file.Files` is `readAllLines(Path path)`. It reads all lines from a file as a `List<String>`, decoding bytes using the platform's default charset.
 
-### 11. Trong Java, đối tượng nào sau đây được sử dụng để đọc dữ liệu từ một tập tin văn bản:
-A. FileWriter
-B. BufferedReader
-C. OutputStream
-D. PrintWriter
+*Knowledge Area: File Handling (Java)*
 
-**Đáp án: B**
+### 13. In the OSI model, which layer does TCP operate, which is crucial for Java Socket programming?
+-) A. Physical Layer
+-) B. Network Layer
+-) C. Transport Layer
+-) D. Application Layer
 
-*Giải thích:* Trong Java, BufferedReader là một lớp được sử dụng để đọc văn bản từ một stream đầu vào ký tự một cách hiệu quả. Nó đệm các ký tự để cung cấp hiệu suất đọc hiệu quả. BufferedReader có phương thức readLine() cho phép đọc một dòng văn bản tại một thời điểm.
+**Correct Answer: C**
 
-```java
-try (BufferedReader reader = new BufferedReader(new FileReader("file.txt"))) {
-    String line;
-    while ((line = reader.readLine()) != null) {
-        System.out.println(line);
-    }
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+*Explanation:* TCP (Transmission Control Protocol), fundamental to Java Socket programming for reliable, connection-oriented communication, operates at the Transport Layer in the OSI model. This layer ensures ordered and reliable delivery of data between applications.
 
-*Mảng kiến thức: Làm việc với tập tin dữ liệu (Working with Data Files)*
+*Knowledge Area: Network Programming (Java)*
 
-### 12. Trong Python, cách nào sau đây là cách đúng để mở một tập tin để ghi:
-A. file = open("file.txt", "r")
-B. file = open("file.txt", "w")
-C. file = open("file.txt", "a")
-D. file = open("file.txt", "x")
+### 14. Which Java class is used on the client side to establish a TCP connection to a server?
+-) A. `ServerSocket`
+-) B. `Socket`
+-) C. `DatagramSocket`
+-) D. `URL`
 
-**Đáp án: B**
+**Correct Answer: B**
 
-*Giải thích:* Trong Python, chế độ "w" được sử dụng để mở một tập tin để ghi. Nếu tập tin không tồn tại, nó sẽ được tạo. Nếu tập tin đã tồn tại, nội dung của nó sẽ bị ghi đè. Các chế độ khác là "r" (đọc), "a" (nối) và "x" (tạo mới, lỗi nếu tập tin đã tồn tại).
+*Explanation:* The `Socket` class in Java is used by clients to initiate a TCP connection to a server.  It represents one endpoint of a two-way communication link between two programs running over the network. `ServerSocket` is for the server-side to listen for incoming connections.
 
-```python
-with open("file.txt", "w") as file:
-    file.write("Hello, World!")
-```
+*Knowledge Area: Network Programming (Java)*
 
-*Mảng kiến thức: Làm việc với tập tin dữ liệu (Working with Data Files)*
+### 15. Which Java class is used on the server side to listen for incoming TCP connection requests?
+-) A. `Socket`
+-) B. `ServerSocket`
+-) C. `DatagramSocket`
+-) D. `InetAddress`
 
-### 13. Trong Java, đối tượng nào sau đây được sử dụng để đọc dữ liệu nhị phân từ một tập tin:
-A. FileInputStream
-B. BufferedReader
-C. StringReader
-D. CharArrayReader
+**Correct Answer: B**
 
-**Đáp án: A**
+*Explanation:* `ServerSocket` is used by server applications in Java to listen for incoming client connection requests over TCP. It waits for clients to attempt a connection on a specific port and then creates a `Socket` object to handle each connection.
 
-*Giải thích:* Trong Java, FileInputStream được sử dụng để đọc dữ liệu nhị phân (binary) từ một tập tin. Nó là một lớp con của InputStream và có thể được sử dụng để đọc dữ liệu byte từ một tập tin.
+*Knowledge Area: Network Programming (Java)*
 
-```java
-try (FileInputStream fis = new FileInputStream("file.bin")) {
-    int data;
-    while ((data = fis.read()) != -1) {
-        // Xử lý dữ liệu
-    }
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+### 16. What is a "port" in networking, relevant to Java socket programming?
+-) A. A type of network cable
+-) B. A physical connector on a network device
+-) C. A logical endpoint for communication on a host, identified by a number
+-) D. A protocol used for data encryption
 
-*Mảng kiến thức: Làm việc với tập tin dữ liệu (Working with Data Files)*
+**Correct Answer: C**
 
-### 14. Trong Python, thư viện nào sau đây thường được sử dụng để làm việc với dữ liệu CSV:
-A. numpy
-B. pandas
-C. matplotlib
-D. scikit-learn
+*Explanation:* In networking, a port is a number that identifies a specific process or service running on a computer. It acts as a logical endpoint for network communication.  TCP and UDP ports are fundamental to socket programming for directing network traffic to the correct application.
 
-**Đáp án: B**
+*Knowledge Area: Network Programming (Java)*
 
-*Giải thích:* Thư viện pandas trong Python cung cấp các công cụ mạnh mẽ để làm việc với dữ liệu có cấu trúc, bao gồm dữ liệu CSV. Hàm read_csv() của pandas là một cách phổ biến để đọc dữ liệu CSV vào một DataFrame, cung cấp nhiều tùy chọn để xử lý các định dạng CSV khác nhau.
+### 17. Which Java class is used to create a UDP socket for sending and receiving datagrams?
+-) A. `Socket`
+-) B. `ServerSocket`
+-) C. `DatagramSocket`
+-) D. `MulticastSocket`
 
-```python
-import pandas as pd
+**Correct Answer: C**
 
-# Đọc tập tin CSV
-df = pd.read_csv("data.csv")
+*Explanation:* `DatagramSocket` in Java is used for UDP (User Datagram Protocol) communication. Unlike TCP sockets (`Socket` and `ServerSocket`), `DatagramSocket` operates connectionlessly and is used to send and receive individual packets of data (datagrams).
 
-# Ghi DataFrame vào tập tin CSV
-df.to_csv("output.csv", index=False)
-```
+*Knowledge Area: Network Programming (Java)*
 
-*Mảng kiến thức: Làm việc với tập tin dữ liệu (Working with Data Files)*
+### 18. Which Java class was traditionally used (before Java 11) to make HTTP requests?
+-) A. `HttpClient`
+-) B. `HttpURLConnection`
+-) C. `HTTPRequest`
+-) D. `WebClient`
 
-### 15. Trong Java, lớp nào được sử dụng để làm việc với tập tin XML:
-A. XMLReader
-B. DocumentBuilder
-C. SAXParser
-D. Tất cả các phương án trên
+**Correct Answer: B**
 
-**Đáp án: D**
+*Explanation:* Before the introduction of the modern `HttpClient` in Java 11, `HttpURLConnection` was the primary class in standard Java for making HTTP requests. It was used to open connections to HTTP servers, send requests, and handle responses.
 
-*Giải thích:* Java cung cấp nhiều cách để làm việc với tập tin XML. DocumentBuilder (trong DOM API) được sử dụng để phân tích một tài liệu XML thành một cây DOM, SAXParser được sử dụng cho phân tích dựa trên sự kiện, và XMLReader là interface chính trong SAX API. Tất cả các lớp này đều có thể được sử dụng để làm việc với tập tin XML, tùy thuộc vào nhu cầu cụ thể.
+*Knowledge Area: Network Programming (Java)*
 
-*Mảng kiến thức: Làm việc với tập tin dữ liệu (Working with Data Files)*
+### 19. Which Java package introduced a modern, non-blocking HTTP Client API in Java 11 and later?
+-) A. `java.net.url`
+-) B. `java.net.http`
+-) C. `java.net.netclient`
+-) D. `java.httpclient`
 
-### 16. RandomAccessFile trong Java được sử dụng để:
-A. Tạo tập tin với nội dung ngẫu nhiên
-B. Đọc và ghi tập tin theo kiểu tuần tự
-C. Đọc và ghi tập tin tại vị trí bất kỳ
-D. Mã hóa nội dung tập tin
+**Correct Answer: B**
 
-**Đáp án: C**
+*Explanation:* The `java.net.http` package, introduced in Java 11, provides the new and improved `HttpClient` API. This API supports modern HTTP features, including HTTP/2, asynchronous requests, and reactive streams for handling request and response bodies.
 
-*Giải thích:* RandomAccessFile trong Java cho phép đọc và ghi tại vị trí bất kỳ trong tập tin. Nó cung cấp phương thức seek() để di chuyển con trỏ tập tin đến vị trí cụ thể và các phương thức để đọc và ghi dữ liệu tại vị trí đó.
+*Knowledge Area: Network Programming (Java)*
 
-```java
-try (RandomAccessFile raf = new RandomAccessFile("file.dat", "rw")) {
-    // Di chuyển đến vị trí cụ thể
-    raf.seek(100);
-    // Ghi dữ liệu tại vị trí đó
-    raf.writeInt(42);
-    // Quay lại để đọc
-    raf.seek(100);
-    int value = raf.readInt();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+### 20. What is the key difference between TCP and UDP protocols, relevant in Java networking?
+-) A. TCP is faster than UDP
+-) B. TCP is connectionless, UDP is connection-oriented
+-) C. TCP provides reliable, ordered delivery of data, while UDP is connectionless and unreliable
+-) D. UDP is used for text data, TCP for binary data
 
-*Mảng kiến thức: Làm việc với tập tin dữ liệu (Working with Data Files)*
+**Correct Answer: C**
 
-### 17. Trong Python, phương thức nào sau đây được sử dụng để đọc toàn bộ nội dung của một tập tin vào một chuỗi:
-A. readlines()
-B. readline()
-C. read()
-D. readall()
+*Explanation:* TCP (Transmission Control Protocol) is reliable and connection-oriented, guaranteeing ordered and error-checked delivery of data. UDP (User Datagram Protocol) is connectionless and unreliable, meaning it provides a simpler, faster transport mechanism without guarantees of delivery or order, suitable for applications where some data loss is acceptable and speed is paramount.
 
-**Đáp án: C**
+*Knowledge Area: Network Programming (Java)*
 
-*Giải thích:* Trong Python, phương thức read() được sử dụng để đọc toàn bộ nội dung của một tập tin vào một chuỗi. Phương thức readlines() đọc tất cả các dòng và trả về một danh sách các dòng, readline() đọc một dòng tại một thời điểm, và không có phương thức readall() trong đối tượng tập tin tiêu chuẩn của Python.
+### 21. In Java multithreading, what is a "join" operation?
+-) A. Starting a new thread
+-) B. Terminating a thread forcefully
+-) C. Waiting for a thread to complete its execution
+-) D. Resuming a paused thread
 
-```python
-with open("file.txt", "r") as file:
-    content = file.read()  # Đọc toàn bộ tập tin
-```
+**Correct Answer: C**
 
-*Mảng kiến thức: Làm việc với tập tin dữ liệu (Working with Data Files)*
+*Explanation:* The `join()` method in Java `Thread` class is used to make the current thread wait until the thread on which `join()` is called terminates. It is used to synchronize threads, ensuring that one thread waits for another to finish before proceeding.
 
-### 18. Trong Java, lớp nào sau đây được sử dụng để tuần tự hóa (serialize) đối tượng vào một tập tin:
-A. FileOutputStream
-B. ObjectOutputStream
-C. DataOutputStream
-D. PrintStream
+*Knowledge Area: Multi-threaded Programming (Java)*
 
-**Đáp án: B**
+### 22. What is the purpose of the `volatile` keyword in Java when used with variables accessed by multiple threads?
+-) A. To make the variable immutable
+-) B. To ensure that the variable is always stored in CPU cache
+-) C. To guarantee that every thread sees the most up-to-date value of the variable, reading directly from main memory
+-) D. To prevent garbage collection of the variable
 
-*Giải thích:* Trong Java, ObjectOutputStream được sử dụng để tuần tự hóa các đối tượng vào một tập tin hoặc stream. Nó chuyển đổi các đối tượng Java thành chuỗi byte để có thể được lưu trữ hoặc truyền.
+**Correct Answer: C**
 
-```java
-try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("object.ser"))) {
-    // Tuần tự hóa đối tượng
-    oos.writeObject(myObject);
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+*Explanation:*  The `volatile` keyword ensures that changes to a variable are immediately visible to all threads. It forces the variable to be read from and written to main memory, bypassing thread-local caches, thus guaranteeing visibility of updates across threads.
 
-*Mảng kiến thức: Làm việc với tập tin dữ liệu (Working with Data Files)*
+*Knowledge Area: Multi-threaded Programming (Java)*
 
-### 19. Trong Python, thư viện nào sau đây được sử dụng để làm việc với dữ liệu JSON:
-A. jsonlib
-B. simplejson
-C. json
-D. pyjson
+### 23. Which Java class is used to serialize Java objects to binary streams for file storage or network transmission?
+-) A. `PrintWriter`
+-) B. `DataOutputStream`
+-) C. `ObjectOutputStream`
+-) D. `FileOutputStream`
 
-**Đáp án: C**
+**Correct Answer: C**
 
-*Giải thích:* Thư viện json là một phần của thư viện tiêu chuẩn Python và được sử dụng để mã hóa và giải mã dữ liệu JSON. Nó cung cấp các phương thức như json.dumps() để chuyển đổi đối tượng Python thành chuỗi JSON và json.loads() để phân tích chuỗi JSON thành đối tượng Python.
+*Explanation:* `ObjectOutputStream` in Java is used to perform object serialization, converting Java objects into a stream of bytes that can be written to a file or transmitted over a network.  This process is essential for saving object states and for remote method invocation (RMI).
 
-```python
-import json
+*Knowledge Area: File Handling (Java)*
 
-# Chuyển đổi từ Python sang JSON
-data = {"name": "John", "age": 30}
-json_str = json.dumps(data)
+### 24. What is the advantage of using a Thread Pool in Java compared to creating new threads for each task?
+-) A. Thread pools increase CPU usage
+-) B. Thread pools reduce the overhead of thread creation and destruction, improving performance and resource management
+-) C. Thread pools guarantee deadlock prevention
+-) D. Thread pools simplify thread synchronization
 
-# Chuyển đổi từ JSON sang Python
-parsed_data = json.loads(json_str)
-```
+**Correct Answer: B**
 
-*Mảng kiến thức: Làm việc với tập tin dữ liệu (Working with Data Files)*
+*Explanation:* Thread pools significantly reduce the overhead associated with creating and destroying threads for each task. By reusing threads, they improve performance, especially for applications with many short-lived tasks, and also help manage resource consumption by limiting the number of concurrently running threads.
 
-### 20. Trong Java, lớp java.nio.file.Files cung cấp phương thức nào để đọc tất cả các dòng từ một tập tin:
-A. readAllBytes()
-B. readAllLines()
-C. lines()
-D. readLines()
+*Knowledge Area: Multi-threaded Programming (Java)*
 
-**Đáp án: B**
+### 25. Which of the following is a common technique to prevent race conditions in Java multithreaded programming?
+-) A. Increasing thread priority
+-) B. Using more threads to handle tasks
+-) C. Using synchronization mechanisms like `synchronized` blocks or locks
+-) D. Using UDP instead of TCP
 
-*Giải thích:* Trong Java, phương thức readAllLines() của lớp java.nio.file.Files đọc tất cả các dòng từ một tập tin và trả về chúng dưới dạng một List<String>. Phương thức này đọc toàn bộ tập tin vào bộ nhớ, vì vậy không phù hợp cho các tập tin rất lớn.
+**Correct Answer: C**
 
-```java
-import java.nio.file.*;
-import java.util.List;
+*Explanation:* Race conditions are primarily prevented by using synchronization mechanisms. Java provides `synchronized` keywords, locks from `java.util.concurrent.locks`, and other concurrency utilities to control access to shared resources and ensure that critical sections of code are executed by only one thread at a time, thus avoiding data corruption and unpredictable behavior.
 
-try {
-    List<String> lines = Files.readAllLines(Paths.get("file.txt"));
-    for (String line : lines) {
-        System.out.println(line);
-    }
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+*Knowledge Area: Multi-threaded Programming (Java)*
 
-*Mảng kiến thức: Làm việc với tập tin dữ liệu (Working with Data Files)*
+### 26. Which method of a `ServerSocket` is used to accept an incoming client connection in Java?
+-) A. `connect()`
+-) B. `listen()`
+-) C. `accept()`
+-) D. `bind()`
 
-### 21. Trong mô hình OSI, TCP hoạt động ở tầng nào:
-A. Tầng Vật lý (Physical Layer)
-B. Tầng Mạng (Network Layer)
-C. Tầng Giao vận (Transport Layer)
-D. Tầng Ứng dụng (Application Layer)
+**Correct Answer: C**
 
-**Đáp án: C**
+*Explanation:* The `accept()` method of the `ServerSocket` class is a blocking method that waits for an incoming client connection. When a client attempts to connect to the server's port, `accept()` returns a new `Socket` object representing the connection to that client, allowing the server to communicate with the client.
 
-*Giải thích:* Trong mô hình OSI, TCP (Transmission Control Protocol) hoạt động ở tầng Giao vận (Transport Layer). Tầng này chịu trách nhiệm cho việc truyền dữ liệu đáng tin cậy giữa các điểm cuối. TCP cung cấp truyền dữ liệu theo trình tự, kiểm soát luồng, kiểm soát tắc nghẽn và phục hồi lỗi.
+*Knowledge Area: Network Programming (Java)*
 
-*Mảng kiến thức: Kỹ thuật làm việc trong môi trường mạng (Network Programming)*
+### 27. In Java NIO (Non-blocking I/O), which component is used for multiplexing I/O operations, allowing a single thread to manage multiple channels?
+-) A. `Thread`
+-) B. `Selector`
+-) C. `Channel`
+-) D. `Buffer`
 
-### 22. Trong Java, lớp nào sau đây được sử dụng để thiết lập kết nối TCP với máy chủ:
-A. ServerSocket
-B. Socket
-C. DatagramSocket
-D. MulticastSocket
+**Correct Answer: B**
 
-**Đáp án: B**
+*Explanation:* In Java NIO, a `Selector` allows a single thread to monitor multiple `Channels` for events such as readiness for reading or writing. This multiplexing capability is key to non-blocking I/O, enabling efficient handling of many connections with fewer threads compared to traditional blocking I/O.
 
-*Giải thích:* Trong Java, lớp Socket được sử dụng bởi client để thiết lập kết nối TCP với máy chủ. Nó tạo ra một socket và kết nối socket đó đến máy chủ được chỉ định bởi địa chỉ IP và cổng.
+*Knowledge Area: Network Programming (Java)*
 
-```java
-try (Socket socket = new Socket("localhost", 8080)) {
-    // Giao tiếp với máy chủ
-    OutputStream output = socket.getOutputStream();
-    // Gửi dữ liệu
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+### 28. What is the purpose of `try-with-resources` statement in Java when working with files?
+-) A. To automatically compress files after use
+-) B. To automatically close resources (like files or sockets) after they are no longer needed, ensuring resource management and preventing leaks
+-) C. To handle exceptions that occur during file operations
+-) D. To optimize file reading and writing speed
 
-*Mảng kiến thức: Kỹ thuật làm việc trong môi trường mạng (Network Programming)*
+**Correct Answer: B**
 
-### 23. Trong Python, module nào sau đây được sử dụng để làm việc với socket:
-A. network
-B. socket
-C. connection
-D. net
+*Explanation:* The `try-with-resources` statement in Java automatically closes resources declared in its try block (like `BufferedReader`, `FileWriter`, `Socket`, etc.) once the block is exited, whether normally or due to an exception. This ensures proper resource management and avoids resource leaks, especially crucial for file and network operations.
 
-**Đáp án: B**
+*Knowledge Area: File Handling (Java)*
 
-*Giải thích:* Trong Python, module socket cung cấp truy cập vào giao diện socket Berkeley. Module này là một phần của thư viện tiêu chuẩn Python và cung cấp các công cụ để tạo các ứng dụng mạng cấp thấp.
+### 29. Which Java class is used for reading and writing primitive data types in a machine-independent way, especially useful in file I/O?
+-) A. `BufferedReader` and `PrintWriter`
+-) B. `FileReader` and `FileWriter`
+-) C. `DataInputStream` and `DataOutputStream`
+-) D. `FileInputStream` and `FileOutputStream`
 
-```python
-import socket
+**Correct Answer: C**
 
-# Tạo socket TCP
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# Kết nối đến máy chủ
-client_socket.connect(("localhost", 8080))
-```
+*Explanation:* `DataInputStream` and `DataOutputStream` in Java are used to read and write primitive data types (like `int`, `float`, `boolean`, etc.) in a binary format that is machine-independent. This is particularly useful for file I/O or network communication where data needs to be consistently interpreted across different systems.
 
-*Mảng kiến thức: Kỹ thuật làm việc trong môi trường mạng (Network Programming)*
+*Knowledge Area: File Handling (Java)*
 
-### 24. Trong networking, "port" là:
-A. Một loại thiết bị phần cứng
-B. Một địa chỉ logic được sử dụng để xác định một ứng dụng cụ thể
-C. Một giao thức truyền dữ liệu
-D. Một loại tường lửa
+### 30.  In Java, what is the role of `Paths.get()` method in the `java.nio.file` package?
+-) A. To delete a file or directory
+-) B. To create a new file or directory
+-) C. To obtain a `Path` object by converting a path string or URI
+-) D. To check if a file or directory exists
 
-**Đáp án: B**
+**Correct Answer: C**
 
-*Giải thích:* Trong networking, port là một địa chỉ logic được sử dụng để xác định một ứng dụng hoặc quy trình cụ thể đang chạy trên một host trong mạng. Các port cho phép nhiều ứng dụng trên cùng một host giao tiếp thông qua mạng. Port được biểu diễn bằng một số 16-bit (0-65535).
+*Explanation:* The `Paths.get()` method in Java NIO is used to create `Path` instances. `Path` is an interface representing a path in a file system. `Paths.get()` can take a string or URI and convert it into a `Path` object, which can then be used with other NIO classes like `Files` for file and directory operations.
 
-*Mảng kiến thức: Kỹ thuật làm việc trong môi trường mạng (Network Programming)*
+*Knowledge Area: File Handling (Java)*
 
-### 25. Trong Java, lớp nào sau đây được sử dụng để tạo máy chủ TCP:
-A. Socket
-B. ServerSocket
-C. DatagramSocket
-D. Protocol
-
-**Đáp án: B**
-
-*Giải thích:* Trong Java, lớp ServerSocket được sử dụng để tạo máy chủ TCP. Nó tạo ra một server socket, gắn nó với một cổng cụ thể, và sau đó lắng nghe các kết nối đến từ clients.
-
-```java
-try (ServerSocket serverSocket = new ServerSocket(8080)) {
-    while (true) {
-        Socket clientSocket = serverSocket.accept();
-        // Xử lý kết nối từ client
-    }
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-*Mảng kiến thức: Kỹ thuật làm việc trong môi trường mạng (Network Programming)*
-
-### 26. Trong Python, thư viện nào sau đây KHÔNG được sử dụng để làm việc với các yêu cầu HTTP:
-A. requests
-B. urllib
-C. httplib2
-D. socketserver
-
-**Đáp án: D**
-
-*Giải thích:* Trong Python, thư viện socketserver được sử dụng để tạo các máy chủ socket, không phải để làm việc trực tiếp với các yêu cầu HTTP. Thư viện requests, urllib, và httplib2 đều được sử dụng để làm việc với các yêu cầu HTTP.
-
-```python
-# Sử dụng thư viện requests
-import requests
-response = requests.get("https://www.example.com")
-
-# Sử dụng thư viện urllib
-import urllib.request
-response = urllib.request.urlopen("https://www.example.com")
-```
-
-*Mảng kiến thức: Kỹ thuật làm việc trong môi trường mạng (Network Programming)*
-
-### 27. Trong Java, lớp nào sau đây được sử dụng để thực hiện các yêu cầu HTTP:
-A. HttpClient (từ java.net.http trong Java 11+)
-B. HttpConnection
-C. WebClient
-D. NetworkClient
-
-**Đáp án: A**
-
-*Giải thích:* Trong Java 11 trở lên, lớp HttpClient từ gói java.net.http được sử dụng để thực hiện các yêu cầu HTTP. Nó cung cấp một API hiện đại và linh hoạt cho việc gửi các yêu cầu HTTP và xử lý các phản hồi.
-
-```java
-import java.net.http.*;
-import java.net.URI;
-
-HttpClient client = HttpClient.newHttpClient();
-HttpRequest request = HttpRequest.newBuilder()
-        .uri(URI.create("https://www.example.com"))
-        .build();
-HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-```
-
-*Mảng kiến thức: Kỹ thuật làm việc trong môi trường mạng (Network Programming)*
-
-### 28. Giao thức UDP khác với TCP ở chỗ:
-A. UDP là hướng kết nối, TCP là không kết nối
-B. UDP cung cấp truyền dữ liệu đáng tin cậy, TCP không
-C. UDP là không kết nối và không đảm bảo việc phân phối gói tin, TCP là hướng kết nối và đáng tin cậy
-D. UDP chỉ có thể truyền text, TCP có thể truyền nhiều loại dữ liệu
-
-**Đáp án: C**
