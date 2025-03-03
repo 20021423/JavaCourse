@@ -1,7 +1,3 @@
-Cảm ơn bạn đã góp ý! Mình sẽ viết lại bài một cách **chi tiết hơn**, **mạch lạc hơn**, **có ví dụ thực tế hơn**, giúp bạn hiểu rõ **Architecture Style, Architecture Pattern, Design Pattern** theo thứ tự **từ tổng quan đến chi tiết**.  
-
----
-
 # **1️⃣ Vấn đề thực tế: Tại sao cần kiến trúc phần mềm?**  
 
 Hãy tưởng tượng bạn đang xây dựng một ứng dụng thương mại điện tử (**E-commerce**).  
