@@ -14,39 +14,39 @@ Dưới đây là code của Sequence Diagram bằng PlantUML (một công cụ 
 ### 📝 **Sequence Diagram (PlantUML)**
 
 ```mermaid
-@startuml
-actor User
-participant Browser
-participant "Spring Security" as Security
-participant Controller
-participant Service
-participant Repository
-database PostgreSQL
-
-group Authentication Flow
-User -> Browser: Submit login credentials
-Browser -> Controller: POST /login
-Controller -> Service: authenticateUser()
-Service -> Repository: findByUsername(username)
-Repository --> Service: return User object
-Service --> Controller: return JWT token or Session ID
-Controller --> Browser: Set JWT Cookie/Session Cookie
-Browser --> User: Login success, cookie stored
-end
-
-== Secured Request with JWT/Cookie ==
-
-group Authenticated User Request
-User -> Browser: Request secured page
-Browser -> Controller: GET /dashboard (with cookie)
-Controller -> Security: validate JWT/Session
-Security --> Controller: Authorized
-Controller -> Service: getUserData()
-Service -> Repository: fetchData()
-Repository --> Service: return data from DB
-Service --> Controller: return data to display
-Controller --> Browser: render Thymeleaf template with data
-Browser --> User: Display data (HTML View)
+sequenceDiagram
+   actor User
+   participant Browser
+   participant "Spring Security" as Security
+   participant Controller
+   participant Service
+   participant Repository
+   database PostgreSQL
+   
+   group Authentication Flow
+   User -> Browser: Submit login credentials
+   Browser -> Controller: POST /login
+   Controller -> Service: authenticateUser()
+   Service -> Repository: findByUsername(username)
+   Repository --> Service: return User object
+   Service --> Controller: return JWT token or Session ID
+   Controller --> Browser: Set JWT Cookie/Session Cookie
+   Browser --> User: Login success, cookie stored
+   end
+   
+   == Secured Request with JWT/Cookie ==
+   
+   group Authenticated User Request
+   User -> Browser: Request secured page
+   Browser -> Controller: GET /dashboard (with cookie)
+   Controller -> Security: validate JWT/Session
+   Security --> Controller: Authorized
+   Controller -> Service: getUserData()
+   Service -> Repository: fetchData()
+   Repository --> Service: return data from DB
+   Service --> Controller: return data to display
+   Controller --> Browser: render Thymeleaf template with data
+   Browser --> User: Display data (HTML View)
 ```
 
 ### Giải thích các thành phần chính:
