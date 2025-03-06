@@ -13,7 +13,7 @@ Dưới đây là code của Sequence Diagram bằng PlantUML (một công cụ 
 
 ### 📝 **Sequence Diagram (PlantUML)**
 
-```plantuml
+```mermaid
 @startuml
 actor User
 participant Browser
