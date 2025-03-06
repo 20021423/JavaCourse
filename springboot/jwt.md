@@ -17,51 +17,50 @@ sequenceDiagram
     participant SecurityService
     participant UserService
     participant UserRepository
-    database PostgreSQL as DB
-    participant ThymeleafView as Thymeleaf
+    participant DB
+    participant ThymeleafView
 
-    Note over Client, DB: Đăng nhập (Authentication) và Truy cập dữ liệu (Authorization)
+    Note right of Client: User initiates login
+    Client ->> +Controller: POST /login (username, password)
+    Controller ->> +SecurityService: Authenticate user
 
-    ' Đăng nhập và cấp JWT hoặc Session
-    Client ->> +Controller: POST /login\n{username, password}
-    Controller ->> +Security: authenticate(username, password)
+    SecurityService ->> +UserRepository: Find user by username
+    UserRepository ->> DB: SELECT * FROM users WHERE username=?
+    DB -->> UserRepository: Return User Data
+    UserRepository -->> -SecurityService: User Entity
 
-    Security ->> +Repo: findByUsername(username)
-    Repo ->> DB: SELECT * FROM users WHERE username=?
-    DB --> Repo: User Record
-    Repo --> -Security: User Entity
+    SecurityService ->> SecurityService: Verify password
 
-    Security ->> Security: passwordEncoder.matches(rawPass, encodedPassword)
+    alt Invalid username/password
+        SecurityService -->> Controller: Authentication Failed
+        Controller -->> Client: 401 Unauthorized
+    else Successful authentication
+        SecurityService -->> -Controller: Authentication Success
 
-    alt Username/password invalid
-        Security --> Controller: AuthenticationException
-        Controller --> Client: 401 Unauthorized
-    else Đăng nhập thành công
-        Security --> -Controller: Authentication success\n(Principal)
-
-        Controller ->> Security: Create JWT/Session
-        Security --> Controller: JWT Token/Session ID
-        Controller --> Client: 200 OK\nSet-Cookie: JWT/Session Cookie
+        Controller ->> SecurityService: Generate JWT/Session
+        SecurityService -->> Controller: Return JWT/Session ID
+        Controller -->> Client: 200 OK (JWT/Session Cookie)
     end
 
-    note over Client, Controller: Đăng nhập hoàn tất.\nTiếp tục truy cập tài nguyên bảo mật.
+    Note right of Client: User accesses protected resource
+    Client ->> +Controller: GET /protected/resource (JWT/Session Cookie)
+    Controller ->> +SecurityService: Validate JWT/Session
 
-    Client ->> +Controller: GET /protected/resource\nCookie: JWT/Session
-    Controller ->> +Security: Check JWT/Session validity
-    alt Token hết hạn hoặc không hợp lệ
-        Security --> Controller: AuthenticationException
-        Controller --> Client: 401 Unauthorized
-    else Token hợp lệ
-        Security --> Controller: Xác thực thành công
-        Controller ->> +Service: getProtectedData()
-        Service ->> +Repo: fetchData()
-        Repo ->> DB: SELECT * FROM protected_table
-        DB --> Repo: ResultSet
-        Repo --> Service: Entity List
-        Service --> Controller: DTO/Data
-        Controller --> Client: Render Thymeleaf View (HTML)
-        Client ->> Client: Display HTML View
+    alt Invalid or expired token
+        SecurityService -->> Controller: Authentication Failed
+        Controller -->> Client: 401 Unauthorized
+    else Token is valid
+        SecurityService -->> Controller: Authentication Success
+        Controller ->> +UserService: Fetch protected data
+        UserService ->> +UserRepository: Query database
+        UserRepository ->> DB: SELECT * FROM protected_table
+        DB -->> UserRepository: Return data
+        UserRepository -->> UserService: Return entity list
+        UserService -->> Controller: Return DTO
+        Controller -->> ThymeleafView: Render HTML
+        ThymeleafView -->> Client: Display HTML Page
     end
+
 
 ```
 
